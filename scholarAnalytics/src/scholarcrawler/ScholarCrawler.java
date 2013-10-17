@@ -34,9 +34,9 @@ public class ScholarCrawler
 			//taskName = AUTHOR_CRAWL_TASK;
 			taskName = AUTHOR_PARSE_TASK;
 			
-			String rawSitePath = "/users/lipczak/data/scholar/raw/";
-			String authorSitePath = "/users/lipczak/data/scholar/authorRaw/";
-			String authorParsedPath = "/users/lipczak/data/scholar/author-stanford.json";
+			String rawSitePath = "/Users/zwu/Downloads/scholar/raw/";
+			String authorSitePath = "/Users/zwu/Downloads/scholar/authorRaw/";
+			String authorParsedPath = "/Users/zwu/Downloads/scholar/author-dal.json";
 			
 			if(AUTHOR_CRAWL_TASK.equals(taskName))
 			{
