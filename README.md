@@ -34,3 +34,5 @@ In terminal, you should go to the directory which contains this README.
 
 So you can access the web page in localhost:8080
 
+Or you can visit https://web.cs.dal.ca/~zwu/systemdemo/
+
