@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="utf-8">
+<style>
+.chord path {
+  fill-opacity: .67;
+  stroke-width: .5px;
+}
+
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+
+div.legendaContinent{
+  background: #f5f5f5;
+  opacity: .9;
+  position:fixed;
+  width: 200px;
+    height: 100px;
+  bottom: 40px;
+  right: 40px;
+  z-index: 1000;
+  padding: 10px;
+}
+</style>
+
+<head>
+<link rel="stylesheet" href="./css/example.css"> 
+<link rel="shortcut icon" href="http://getbootstrap.com/assets/ico/favicon.ico">
+
+<title>Visualization Project</title>
+
+<!-- Bootstrap core CSS -->
+<link href="../css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom styles for this template -->
+<link href="../css/cover.css" rel="stylesheet">
+<link rel="stylesheet" href="//rawgithub.com/Caged/d3-tip/master/examples/example-styles.css">
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.0.js"></script>
+<script type="text/javascript" src="jquery-color/jquery.color.js"></script>
+<script type="text/javascript" src="color_mixer.js"></script>
+<script type="text/javascript" src="http://twitter.github.io/typeahead.js/releases/latest/typeahead.bundle.js"></script>
+<script type="text/javascript" src="handlebars.js"></script>
+</head>
+<body>
+<div>
+
+      <div>
+
+        <div class="cover-container">
+
+          <div class="masthead clearfix">
+            <div class="inner">
+              <h3 class="masthead-brand">Project</h3>
+              <ul class="nav masthead-nav">
+                <li ><a href="../index.html">Home</a></li>
+                <li><a href="../classification/chart.html">Classification</a></li>
+                <li class="active"><a href="../chord_diagram/dal_chord_diagram.html">Connections</a></li>
+              </ul>
+            </div>
+          
+          </div>
+           <br>
+           <br>
+           <br>
+           <br>
+           <br>
+           <br>
+          <span >Professors' Common Interest Relationships</span>
+            
+           <br>
+           <br>
+
+             
+          <li><h5 class="label-input-field"> Choose Dataset: </h5></li>
+          <div class="btn-group button-input-field" data-toggle="buttons">
+          <label class="btn btn-info" ><input type="radio" name="width" id="width1" onchange="ChooseDataset('Dalhousie')"> Dalhousie</label>
+          <label class="btn btn-info" ><input type="radio" name="width" id="width1" onchange="ChooseDataset('Stanford')"> Standford</label>
+          </div>
+
+
+            <br>
+            <br>
+         
+            <span class="twitter-typeahead" style="position: relative; display: inline-block;">
+
+            <input class="typeahead-tt-hint" type="text" disabled="" autocomplete="off" spellcheck="false" style=" position: absolute; top: 0px; left: 0px; border-color: transparent; box-shadow: none; background-attachment: scroll; background-clip: border-box; background-color: transparent; background-image: none; background-origin: padding-box; background-size: auto; background-position: 0% 0%; background-repeat: repeat repeat; ">
+
+            <input id = "input" class="typeahead-tt-input" type = "textbox"  placeholder="Professor name" style="position: relative; vertical-align: top; background-color: transparent;"/>
+
+          <div class="btn-group">
+            <button id="Add" type="button" class="btn btn-default" onclick="myFunction()" style="position: relative; vertical-align: top; background-color: grey;">Add</button> 
+
+          </div>
+
+            <pre aria-hidden="true" style="position: absolute; visibility: hidden; white-space: nowrap; font-family: '.LucidaGrandeUI'; font-size: 24px; font-style: normal; font-variant: normal; font-weight: 400; word-spacing: 0px; letter-spacing: 0px; text-indent: 0px; text-rendering: auto; text-transform: none;"></pre>
+           
+             <span class="tt-dropdown-menu" style="position: absolute; top: 100%; left: 0px; z-index: 100; display: none;">
+             <div class="tt-dataset-0"></div>
+             </span>
+              <ul class="list-group" id="mySelect"></ul>
+
+          </span>   
+           <br>
+           <br>
+           <br>
+           <br>
+           <br>
+           <br>
+
+           <br>
+           <br>
+           <br>
+
+
+          <div class="btn-group button-input-field" data-toggle="buttons">
+          <label class="btn btn-info" ><input type="radio"  name="width" id="width1"  onchange="ChooseClass('real');">Show Actual Class</label>
+          <label class="btn btn-info" ><input type="radio"  name="width" id="width1" onchange="ChooseClass('classified');">Show Classified Class</label>
+          </div>
+
+
+          <li><h5 class="label-input-field"> Tags degrees of Generality: </h5></li>
+          <div class="btn-group button-input-field" data-toggle="buttons">
+          <label class="btn btn-info"><input type="radio" name="width" id="width1" onchange="Filter_Part_Matrix(0)"> 1</label>
+          <label class="btn btn-info"><input type="radio" name="width" id="width1" onchange="Filter_Part_Matrix(1)"> 2</label>
+          <label class="btn btn-info"><input type="radio" name="width" id="width1" onchange="Filter_Part_Matrix(2)"> 3</label>
+          <label class="btn btn-info"><input type="radio" name="width" id="width1" onchange="Filter_Part_Matrix(3)"> 4</label>
+          <label class="btn btn-info"><input type="radio" name="width" id="width1" onchange="Filter_Part_Matrix(4)"> 5</label>
+          <label class="btn btn-info"><input type="radio" name="width" id="width1" onchange="Filter_Part_Matrix(5)"> 6</label>
+          <label class="btn btn-info"><input type="radio" name="width" id="width1" onchange="Filter_Part_Matrix(6)"> 7</label>
+          <label class="btn btn-info"><input type="radio" name="width" id="width1" onchange="Filter_Part_Matrix(7)"> 8</label>
+        </div>
+
+        <li><h5 class="label-input-field"> Show The Whole Dataset: </h5></li>
+          <div class="btn-group button-input-field" data-toggle="buttons">
+          <label class="btn btn-info"><input type="radio" name="width" id="width1" onchange="Filter_Whole_Matrix(0)"> 1</label>
+          <label class="btn btn-info"><input type="radio" name="width" id="width1" onchange="Filter_Whole_Matrix(1)"> 2</label>
+          <label class="btn btn-info"><input type="radio" name="width" id="width1" onchange="Filter_Whole_Matrix(2)"> 3</label>
+          <label class="btn btn-info"><input type="radio" name="width" id="width1" onchange="Filter_Whole_Matrix(3)"> 4</label>
+          <label class="btn btn-info"><input type="radio" name="width" id="width1" onchange="Filter_Whole_Matrix(4)"> 5</label>
+          <label class="btn btn-info"><input type="radio" name="width" id="width1" onchange="Filter_Whole_Matrix(5)"> 6</label>
+          <label class="btn btn-info"><input type="radio" name="width" id="width1" onchange="Filter_Whole_Matrix(6)"> 7</label>
+          <label class="btn btn-info"><input type="radio" name="width" id="width1" onchange="Filter_Whole_Matrix(7)"> 8</label>
+        </div>
+          
+
+         
+          <div class="tooltip"></div>
+          <script src="AddProf.js"></script>
+          <script src="./data/data.js"></script>
+          <script src="map.js"></script>
+          <script src="choosedataset.js"></script>
+          <script src="load_chord_diagram.js"></script>
+          <script src="typeahead.js"></script>
+          <script src="FilterMatrix.js"></script>
+          <script src="load_whole_chord_diagram.js"></script>
+         
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+   
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="http://silviomoreto.github.io/bootstrap-select/javascripts/bootstrap-select.js"></script>
+      
+    <script src="../js/docs.min.js"></script>
+
+</body>
+</html>
