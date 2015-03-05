@@ -36,3 +36,5 @@ So you can access the web page in localhost:8080
 
 Or you can visit https://web.cs.dal.ca/~zwu/systemdemo/
 
+And the demo video is available to download at https://web.cs.dal.ca/~zwu/HonorThesis/demo.mp4
+
