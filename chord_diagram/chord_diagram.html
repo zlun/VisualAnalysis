@@ -1,3 +1,13 @@
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-60780363-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
 <!DOCTYPE html>
 <html lang="en">
 <meta charset="utf-8">
@@ -53,7 +63,7 @@ div.legendaContinent{
 <link rel="stylesheet" href="./css/example.css"> 
 <link rel="shortcut icon" href="http://getbootstrap.com/assets/ico/favicon.ico">
 
-<title>Visualization Project</title>
+<title>Honor Thesis Project</title>
 
 <!-- Bootstrap core CSS -->
 <link href="../css/bootstrap.min.css" rel="stylesheet">
@@ -82,7 +92,7 @@ div.legendaContinent{
               <ul class="nav masthead-nav">
                 <li ><a href="../index.html">Home</a></li>
                 <li><a href="../classification/chart.html">Classification</a></li>
-                <li class="active"><a href="../chord_diagram/dal_chord_diagram.html">Connections</a></li>
+                <li class="active"><a href="../chord_diagram/chord_diagram.html">Relationships</a></li>
               </ul>
             </div>
           
@@ -102,7 +112,7 @@ div.legendaContinent{
           <li><h5 class="label-input-field"> Choose Dataset: </h5></li>
           <div class="btn-group button-input-field" data-toggle="buttons">
           <label class="btn btn-info" ><input type="radio" name="width" id="width1" onchange="ChooseDataset('Dalhousie')"> Dalhousie</label>
-          <label class="btn btn-info" ><input type="radio" name="width" id="width1" onchange="ChooseDataset('Stanford')"> Standford</label>
+          <label class="btn btn-info" ><input type="radio" name="width" id="width1" onchange="ChooseDataset('Stanford')"> Stanford</label>
           </div>
 
 
@@ -146,7 +156,7 @@ div.legendaContinent{
           </div>
 
 
-          <li><h5 class="label-input-field"> Tags degrees of Generality: </h5></li>
+          <li><h5 class="label-input-field"> Show The Selected Professors' Relationships </h5></li>
           <div class="btn-group button-input-field" data-toggle="buttons">
           <label class="btn btn-info"><input type="radio" name="width" id="width1" onchange="Filter_Part_Matrix(0)"> 1</label>
           <label class="btn btn-info"><input type="radio" name="width" id="width1" onchange="Filter_Part_Matrix(1)"> 2</label>
