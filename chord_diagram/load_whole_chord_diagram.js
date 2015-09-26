@@ -257,17 +257,18 @@ var width_chord = 1000,
     outerRadius = innerRadius * 1.1;
 
 
-var svg_chord_existance = d3.select('svg');
+var svg_chord_existance = d3.select('#svg_chord');
 if(!svg_chord_existance.empty())
 {
-  d3.select("svg").remove();
+  d3.select("#svg_chord").remove();
 }
 
 var svg_chord = d3.select("body").append("svg")
     .attr("width", 800)
     .attr("height", 800)
+    .attr("id","svg_chord")
   .append("g")
-    .attr("transform", "translate(300, 350)");
+    .attr("transform", "translate(300, 320)");
     
     svg_chord.call(tip);
 
@@ -307,7 +308,7 @@ ticks.append("text")
 .text(function(d) {
     return professors[d.index];
 })
-.style("fill","white")
+.style("fill","black")
 .style("font-size",function(d){
   if(window.dataset=='Dalhousie') return "12px";
   if(window.dataset=='Stanford')  return "8px";
@@ -347,7 +348,7 @@ svg_chord.append("g")
       .attr("y", 9)
       .attr("dy", ".35em")
       .style("text-anchor", "end")
-      .style("fill","white")
+      .style("fill","black")
       .text(function(d) { return d; });
 // Returns an event handler for fading a given chord group.
   function fade(opacity) {

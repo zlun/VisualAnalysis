@@ -1,76 +1,354 @@
-<html lang="en"><head>
+<!DOCTYPE html>
+<html lang="en">
+<style>
+.chord path {
+  fill-opacity: .67;
+  stroke-width: .5px;
+}
+
+body {
+  font: 10px sans-serif;
+}
+.Text
+{
+  color:black;
+  font-weight:bold;
+  font-family: Arial;
+  font-size: 24px;
+
+}
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.bar {
+  fill: steelblue;
+}
+
+.x.axis path {
+  display: none;
+}
+.chord path {
+  fill-opacity: .67;
+  stroke-width: .5px;
+}
+
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+
+div.legendaContinent{
+  background: #f5f5f5;
+  opacity: .9;
+  position:fixed;
+  width: 200px;
+    height: 100px;
+  bottom: 40px;
+  right: 40px;
+  z-index: 1000;
+  padding: 10px;
+}
+
+</style>
+
+<head>
+	<link rel="stylesheet" href="http://rawgithub.com/Caged/d3-tip/master/examples/example-styles.css">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   
-    <link rel="shortcut icon" href="http://getbootstrap.com/assets/ico/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="discription" content="Undergraduate Honor Thesis Demo">
+    <meta name="author" content="Zhelun Wu">
 
-    <title>Honor Thesis Project</title>
+    <title>Honor Thesis Demo</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom styles for this template -->
-    <link href="./css/cover.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/scrolling-nav.css" rel="stylesheet">
 
-    <!-- Just for debugging purposes. Don't actually copy this line! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	<script src="http://d3js.org/d3.v3.min.js"></script>
+	<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+	<script src="http://code.jquery.com/jquery-1.11.0.js"></script>
+	<script type="text/javascript" src="http://twitter.github.io/typeahead.js/releases/latest/typeahead.bundle.js"></script>
+	<script type="text/javascript" src="chord_diagram/handlebars.js"></script>
+	<script type="text/javascript" src="chord_diagram/jquery-color/jquery.color.js"></script>
+	<script type="text/javascript" src="chord_diagram/color_mixer.js"></script>
 
-  ga('create', 'UA-60780363-2', 'auto');
-  ga('send', 'pageview');
 
-    </script>
-  </head>
+</head>
 
-  <body>
+<!-- The #page-top ID is part of the scrolling feature - the data-spy and data-target are part of the built-in Bootstrap scrollspy function -->
 
-    <div class="site-wrapper">
-
-      <div class="site-wrapper-inner">
-
-        <div class="cover-container">
-
-          <div class="masthead clearfix">
-            <div class="inner">
-              <h3 class="masthead-brand">Project</h3>
-              <ul class="nav masthead-nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="./classification/chart.html">Classification</a></li>
-                <li><a href="./chord_diagram/chord_diagram.html">Relationships</a></li>
-              </ul>
+<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top">Home</a>
             </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                    <li class="hidden">
+                        <a class="page-scroll" href="#page-top"></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#about">Abstract</a>
+                    </li>
+                    
+                  	<li>
+                        <a class="page-scroll" href="#setup">Experiment Setup</a>
+                    </li>
+                    
+                    <li>
+                        <a class="page-scroll" href="#classify">Classifier</a>
+                    </li>
+                    
+                    <li>
+                        <a class="page-scroll" href="#visualize">Visualization</a>
+                    </li>
+                    
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Intro Section -->
+    <section id="intro" class="intro-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1>INTERACTIVE VISUALIZATION OF USER PROFILE CLASSIFICATIONS AND RELATIONSHIPS</h1>
+                    <br>
+                    <br>
+                    <p><strong>Author: Zhelun Wu</strong> <br>
+                    <br>
+                    <br>
+                     Submitted in partial fulfillment of the requirements for the degree of Bachelor of Computer Science, Honours <br>
+at <br>
+Dalhousie University Halifax, Nova Scotia April 2014</p>
+                    <address>
+  <strong>Contact Me</strong><br>
+  <a href="mailto:#">zhelunw@sfu.ca</a>
+</address>
+                </div>
+            </div>
+        </div>
+    </section>
+	
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 align ='justify' >Abstract</h1>
+                    <p align='justify'>
+                    User profiles are commonly used in online social networking sites such as Linkedin, Twitter and Google Scholar. <br>
+                    The Profiles can be used to store the characteristics and interests of a person. For example, given user <br>
+                    profiles, we can categorize users and find common interests among them. Manual profiling and categorization are <br>
+                    very laborious tasks, therefore in this thesis, we propose an interactive visualization system that automatically <br>
+                    classifies user profiles and finds their relationships based on the contents of profiles. The input data are user <br>
+                    profiles in HTML format. To visualize the classifications and relationships, we create interactive diagrams using a <br>
+                    javascript library D3.js. In addition, we conducted experiments on profiles of researchers from Dalhousie and Stanford <br>
+                    extracted from Google Scholar. The trained classifier achieved up to 96.67% accuracy on 30 Dalhousie profiles and 74.46% <br>
+                    on 188 Stanford profiles using 10-fold cross validation, both trained by extracting key phrases from their paper titles. <br>
+                    We also propose a profile extraction method based on tag generalization which can be applied when textual information <br>
+                    about the user is not available. Our system contributes to finding the best training phrases (from manual assigned phrases, <br>
+                    extracted key phrases and general tags) to train the best performance classifier, visualizing the classified results <br>
+                    and finding relationships among user profiles according to general tags.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+	
+    <!-- Services Section -->
+    <section id="setup" class="services-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1>Experiment Setup</h1>
+                    <h4 align = 'justify'> <strong> Classifier Evaluation </strong> </h4>
+                    <p align='justify'> We trained the classifiers from the extracted and automatic generated key phrases from Google Scholar User Profiles.
+                    The dataset consists 30 profiles from Dalhousie University researchers and 180 profiles from Stanford University. We used 10-fold cross validation. The
+                    training set is a set of key phrases with the class of research area. We want to use this chart to show which key phrases can train a good classifier to classifiy
+                    the research area 
+                    </p>
+                    <h4 align = 'justify'> <strong> Common Interest Relationships Visualization </strong> </h4>
+                    <p align='justify'>  
+                    We visualized the common research interest among the researchers. We connected researchers based on the different generalization level phrases generated from the key phrases extracted from their
+                    user profiles. 
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+	<section id="classify" class="services-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 align ='justify'>Classifier Evaluation</h1>
+                    	<p align ='justify'>
+                    	 
+                    	 <br>
+                    	 <strong> iter 0 to 8 </strong>: We have a tag generalization system which take the phrases as input to genearte different levels of generalization phrases. The higher level of generalization, 
+                    	 more general meaning the phrase is. iter 0 means the orignial phrases, and iter 8 is the highest level of the generalization. <br>
+                    	 <strong> DalKeyPhrases and StanfordKeyPhrases</strong>: The key phrases are from the user profiles article key phrases, weighted by semantic similarity score returned from phrase generalization system. <br>
+                    	 <strong> DalDomain and StanfordDomain</strong>: The key phrases are extracted from user profile. Theses phrases are the users manually provided when they create the their user profiles. Each phrases are weighted by their frequency. <br>
+                    	 <strong> DalKeyPhrasesFre and StanfordKeyPhrasesFre </strong> : The key phrases are from the user profiles article key phrases, weighted by their frequency. <br>
+                    	 </p>
+                    	 
+						<div class="inner-cover">
+           
+           				<script src= "classification/chart.js"></script>
+
+         				</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="visualize" class="services-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12" align='justify'>
+                    <h1>Visualization Section</h1>
+                     <li><h5 class="label-input-field"> Choose Dataset: </h5></li>
+          <div class="btn-group button-input-field" data-toggle="buttons">
+          <label class="btn btn-info" ><input type="radio" name="width" id="width1" onchange="ChooseDataset('Dalhousie')"> Dalhousie</label>
+          <label class="btn btn-info" ><input type="radio" name="width" id="width1" onchange="ChooseDataset('Stanford')"> Stanford</label>
+                    
+                </div>
+                <span class="twitter-typeahead" style="position: relative; display: inline-block;">
+
+            <input class="typeahead-tt-hint" type="text" disabled="" autocomplete="off" spellcheck="false" style=" position: absolute; top: 0px; left: 0px; border-color: transparent; box-shadow: none; background-attachment: scroll; background-clip: border-box; background-color: transparent; background-image: none; background-origin: padding-box; background-size: auto; background-position: 0% 0%; background-repeat: repeat repeat; ">
+
+            <input id = "input" class="typeahead-tt-input" type = "textbox"  placeholder="Professor name" style="position: relative; vertical-align: top; background-color: transparent;"/>
+
+          <div class="btn-group">
+            <button id="Add" type="button" class="btn btn-default" onclick="myFunction()" style="position: relative; vertical-align: top; background-color: grey;">Add</button> 
+
           </div>
 
-          <div class="inner cover">
-            <h1 class="cover-heading">Honor Thesis System Demo</h1>
-            <p class="lead">Visualization of Google Scholar Profiles Classifications and Relationships </p>
+            <pre aria-hidden="true" style="position: absolute; visibility: hidden; white-space: nowrap; font-family: '.LucidaGrandeUI'; font-size: 24px; font-style: normal; font-variant: normal; font-weight: 400; word-spacing: 0px; letter-spacing: 0px; text-indent: 0px; text-rendering: auto; text-transform: none;"></pre>
+           
+             <span class="tt-dropdown-menu" style="position: absolute; top: 100%; left: 0px; z-index: 100; display: none;">
+             <div class="tt-dataset-0"></div>
+             </span>
+              <ul class="list-group" id="mySelect"></ul>
 
+          </span>   
+           <br>
+           <br>
+           <br>
+           <br>
+           <br>
+         
+
+
+          <div class="btn-group button-input-field" data-toggle="buttons">
+          <label class="btn btn-info" ><input type="radio"  name="width" id="width1"  onchange="ChooseClass('real');">Show Actual Class</label>
+          <label class="btn btn-info" ><input type="radio"  name="width" id="width1" onchange="ChooseClass('classified');">Show Classified Class</label>
           </div>
 
 
+          <li><h5 class="label-input-field"> Show The Selected Professors' Relationships </h5></li>
+          <div class="btn-group button-input-field" data-toggle="buttons">
+          <label class="btn btn-info"><input type="radio" name="width" id="width1" onchange="Filter_Part_Matrix(0)"> 1</label>
+          <label class="btn btn-info"><input type="radio" name="width" id="width1" onchange="Filter_Part_Matrix(1)"> 2</label>
+          <label class="btn btn-info"><input type="radio" name="width" id="width1" onchange="Filter_Part_Matrix(2)"> 3</label>
+          <label class="btn btn-info"><input type="radio" name="width" id="width1" onchange="Filter_Part_Matrix(3)"> 4</label>
+          <label class="btn btn-info"><input type="radio" name="width" id="width1" onchange="Filter_Part_Matrix(4)"> 5</label>
+          <label class="btn btn-info"><input type="radio" name="width" id="width1" onchange="Filter_Part_Matrix(5)"> 6</label>
+          <label class="btn btn-info"><input type="radio" name="width" id="width1" onchange="Filter_Part_Matrix(6)"> 7</label>
+          <label class="btn btn-info"><input type="radio" name="width" id="width1" onchange="Filter_Part_Matrix(7)"> 8</label>
         </div>
 
-      </div>
+        <li><h5 class="label-input-field"> Show The Whole Dataset: </h5></li>
+          <div class="btn-group button-input-field" data-toggle="buttons">
+          <label class="btn btn-info"><input type="radio" name="width" id="width1" onchange="Filter_Whole_Matrix(0)"> 1</label>
+          <label class="btn btn-info"><input type="radio" name="width" id="width1" onchange="Filter_Whole_Matrix(1)"> 2</label>
+          <label class="btn btn-info"><input type="radio" name="width" id="width1" onchange="Filter_Whole_Matrix(2)"> 3</label>
+          <label class="btn btn-info"><input type="radio" name="width" id="width1" onchange="Filter_Whole_Matrix(3)"> 4</label>
+          <label class="btn btn-info"><input type="radio" name="width" id="width1" onchange="Filter_Whole_Matrix(4)"> 5</label>
+          <label class="btn btn-info"><input type="radio" name="width" id="width1" onchange="Filter_Whole_Matrix(5)"> 6</label>
+          <label class="btn btn-info"><input type="radio" name="width" id="width1" onchange="Filter_Whole_Matrix(6)"> 7</label>
+          <label class="btn btn-info"><input type="radio" name="width" id="width1" onchange="Filter_Whole_Matrix(7)"> 8</label>
+        </div>
+          
+			
+         
+          <div class="tooltip"></div>
+          
+		  <script src="chord_diagram/AddProf.js"></script>
+          <script src="chord_diagram/data/data.js"></script>
+          <script src="chord_diagram/map.js"></script>
+          <script src="chord_diagram/typeahead.js"></script>
+          <script src="chord_diagram/choosedataset.js"></script>
+          <script src="chord_diagram/load_chord_diagram.js"></script>
+          <script src="chord_diagram/FilterMatrix.js"></script>
+          <script src="chord_diagram/load_whole_chord_diagram.js"></script>
+        </div>
+        </div>
+    </section>
 
-    </div>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="./js/bootstrap.min.js"></script>
+    <!-- jQuery -->
+	
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
 
-    <script src="./js/docs.min.js"></script>
-  
+    <!-- Scrolling Nav JavaScript -->
+    <script src="js/jquery.easing.min.js"></script>
+    <script src="js/scrolling-nav.js"></script>
+	
+	<!-- Load js library -->
+	<script src="js/docs.min.js"></script>
+</body>
 
-</body></html>
+</html>

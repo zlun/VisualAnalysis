@@ -2,14 +2,14 @@
 var Dal_professors = new Bloodhound({
   datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.team); },
   queryTokenizer: Bloodhound.tokenizers.whitespace,
-  prefetch: './data/Dal_Professors.json'
+  prefetch: 'chord_diagram/data/Dal_Professors.json'
     
 });
 
 var Stanford_professors = new Bloodhound({
   datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.team); },
   queryTokenizer: Bloodhound.tokenizers.whitespace,
-  prefetch: './data/Stanford_Professors.json'
+  prefetch: 'chord_diagram/data/Stanford_Professors.json'
     
 });
 
