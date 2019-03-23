@@ -34,7 +34,8 @@ Make sure you have already installed Python.
 To run the web page, using python to set up a local server is recommended.
 
 In terminal, you should go to the directory which contains this README.
-	type: python -m SimpleHTTPServer 8080 & 
+
+Type: python -m SimpleHTTPServer 8080 & 
 
 You can access the web page in localhost:8080
 
