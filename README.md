@@ -35,11 +35,11 @@ To run the web page, using python to set up a local server is recommended.
 
 In terminal, you should go to the directory which contains this README.
 
-	Type: ```python -m SimpleHTTPServer 8080 & ```
+Type: ```python -m SimpleHTTPServer 8080 & ```
 
-You can access the web page in localhost:8080
+* You can access the web page in localhost:8080
 
-You can visit https://web.cs.dal.ca/~zwu/systemdemo/
+* You can visit https://web.cs.dal.ca/~zwu/systemdemo/
 
-The demo video is available to download at https://web.cs.dal.ca/~zwu/HonorThesis/demo.mp4
+* The demo video is available to download at https://web.cs.dal.ca/~zwu/HonorThesis/demo.mp4
 
